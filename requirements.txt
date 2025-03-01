@@ -1,0 +1,6 @@
+loguru==0.7.2
+
+flask==3.0.1
+flask[async]==3.0.1
+
+requests
