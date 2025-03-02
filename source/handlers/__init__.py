@@ -5,7 +5,7 @@ from .helpers import count_words, check_link
 from .api_requests import get_user
 from .api_requests import add_new_domain
 
-from .answers import url_analysis_answer, sites_analysis_answer, article_analysis_answer
+from .answers import url_analysis_answer, sites_analysis_answer, article_analysis_answer, tg_channels_analysis_answer
 
 
 default_lang = 'ua'
@@ -31,19 +31,22 @@ async def get_answer(message:str):
     user_lang = default_lang
     text = message
     
-    answer = ""
+    #answer = ""
     
     is_link = check_link(text)
     
     if is_link:
-        answer += url_analysis_answer(url=text, language=user_lang)
+        answer = url_analysis_answer(url=text, language=user_lang)
         
         add_new_domain(url=text)
 
     if count_words(text) < 20 and not is_link:
         answer = sites_analysis_answer(query=text, language=user_lang)
+        logger.info(answer)
+        answer += tg_channels_analysis_answer(query=text, language=user_lang)
     else:
         answer = article_analysis_answer(text, user_lang)
+        
     
     #logger.info(f"{answer}, {tg_id}, {text}, {answer}")
     

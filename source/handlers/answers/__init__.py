@@ -21,143 +21,150 @@ def flag_by_country(code: str):
 
 @logger.catch
 def url_analysis_answer(url: str, language: str):
-    answer = ""
+    #answer = ""
     
     request = url_analysis(url=url, language=language)
     logger.info(request)
     
     if not 'result' in request:
-        answer = "no answer"
-        return answer
+        #answer = "no answer"
+        return None
 
-    for key, value in request['result'].items():
-        if value == 'None':
-            continue
-        if key == 'postAuthor':
-            answer += '<b>Автор статті: </b>' + value + '\n'
-        if key == 'postThesis':
-            answer += '<b>Головний тезис: </b>' + value + '\n'
-        if key == 'postSource':
-            answer += '<b>Джерело новини: </b>' + value + '\n'
-        if key == 'postEmotion':
-            answer += '<b>Емоційне забарвлення: </b>' + value + '\n'
+    # for key, value in request['result'].items():
+    #     if value == 'None':
+    #         continue
+    #     if key == 'postAuthor':
+    #         answer += '<b>Автор статті: </b>' + value + '\n'
+    #     if key == 'postThesis':
+    #         answer += '<b>Головний тезис: </b>' + value + '\n'
+    #     if key == 'postSource':
+    #         answer += '<b>Джерело новини: </b>' + value + '\n'
+    #     if key == 'postEmotion':
+    #         answer += '<b>Емоційне забарвлення: </b>' + value + '\n'
     
-    return answer
+    return request['result']
 
 
 
 @logger.catch
 def article_analysis_answer(article: str, language: str):
-    answer = ""
+    #answer = ""
     
     request = article_analysis(article=article, language=language)
     logger.info(request)
     
     if not 'result' in request:
-        answer = "no answer"
-        return answer
+        #answer = "no answer"
+        return None
 
-    for key, value in request['result'].items():
-        if value == 'None':
-            continue
-        if key == 'postAuthor':
-            answer += '<b>Автор статті: </b>' + value + '\n'
-        if key == 'postThesis':
-            answer += '<b>Головний тезис: </b>' + value + '\n'
-        if key == 'postSource':
-            answer += '<b>Джерело новини: </b>' + value + '\n'
-        if key == 'postEmotion':
-            answer += '<b>Емоційне забарвлення: </b>' + value + '\n'
+    # for key, value in request['result'].items():
+    #     if value == 'None':
+    #         continue
+    #     if key == 'postAuthor':
+    #         answer += '<b>Автор статті: </b>' + value + '\n'
+    #     if key == 'postThesis':
+    #         answer += '<b>Головний тезис: </b>' + value + '\n'
+    #     if key == 'postSource':
+    #         answer += '<b>Джерело новини: </b>' + value + '\n'
+    #     if key == 'postEmotion':
+    #         answer += '<b>Емоційне забарвлення: </b>' + value + '\n'
     
-    return answer
+    return request['result']
 
 
 
 @logger.catch
 def sites_analysis_answer(query: str, language: str):
-    answer = ""
+    #answer = ""
     
     request = sites_analysis(query=query, language=language)
     logger.info(request)
     
-    show_detailed = 5
+    if not 'result' in request:
+        #answer = "no answer"
+        return None
     
-    if 'result' in request:
-        for info in request['result']:
-            parsed_url = urlparse(info['url'])
+    # show_detailed = 5
+    
+    # if 'result' in request:
+    #     for info in request['result']:
+    #         parsed_url = urlparse(info['url'])
             
-            hyperlink = f"<a href='{info['url']}'>{parsed_url.netloc}</a>"
+    #         hyperlink = f"<a href='{info['url']}'>{parsed_url.netloc}</a>"
             
-            if 'county_code' in info:
-                country_code = flag_by_country(info['county_code'])
-                answer += f"{ country_code }"
+    #         if 'county_code' in info:
+    #             country_code = flag_by_country(info['county_code'])
+    #             answer += f"{ country_code }"
 
-            if info['date'] and show_detailed > 0:
+    #         if info['date'] and show_detailed > 0:
                 
-                if answer == "":
-                    answer += "<b>Ймомовірне первинне джерело поширення:</b>\n"
+    #             if answer == "":
+    #                 answer += "<b>Ймомовірне первинне джерело поширення:</b>\n"
                 
-                date_obj = datetime.strptime(info['date'], "%Y-%m-%d %H:%M:%S")
-                date = date_obj.strftime("%Y-%m-%d")
+    #             date_obj = datetime.strptime(info['date'], "%Y-%m-%d %H:%M:%S")
+    #             date = date_obj.strftime("%Y-%m-%d")
                 
-                answer += f"{date} •"
+    #             answer += f"{date} •"
             
             
-            if show_detailed > 0 and not info['date']:
-                show_detailed = 0;
-                answer += f"\n<b>Згадки на сайтах:</b>\n"
+    #         if show_detailed > 0 and not info['date']:
+    #             show_detailed = 0;
+    #             answer += f"\n<b>Згадки на сайтах:</b>\n"
                 
-            answer += f"{hyperlink}•"
+    #         answer += f"{hyperlink}•"
                 
-            show_detailed -= 1
+    #         show_detailed -= 1
 
-            if show_detailed > 0:
-                answer += "\n"
+    #         if show_detailed > 0:
+    #             answer += "\n"
 
 
         
-    telegram_analysis_result = tg_channels_analysis_answer(query=query, language=language)
-    if telegram_analysis_result != None:
-        answer = f"{answer}\n{telegram_analysis_result}"
+    # telegram_analysis_result = tg_channels_analysis_answer(query=query, language=language)
+    # if telegram_analysis_result != None:
+    #     answer = f"{answer}\n{telegram_analysis_result}"
 
-    return answer
+
+
+    return request['result']
 
 
 
 @logger.catch
 def tg_channels_analysis_answer(query: str, language: str):
-    answer = ""
+    #answer = ""
     
     request = telegram_channels(query=query, language=language)
+    logger.info(request)
     
     if not 'result' in request:
-        answer = ""
-        return answer
+        #answer = "no answer"
+        return None
     
-    telegram_search = request['result']
+    # telegram_search = request['result']
     
-    to_show = 3
+    # to_show = 3
     
-    for post_info in telegram_search:
-        if to_show <= 0:
-            break
-        to_show -= 1
+    # for post_info in telegram_search:
+    #     if to_show <= 0:
+    #         break
+    #     to_show -= 1
         
-        if len(answer) > 500:
-            break
+    #     if len(answer) > 500:
+    #         break
 
-        link = post_info['link']
-        post_id = str(post_info['message_id'])
-        date = post_info['date']
+    #     link = post_info['link']
+    #     post_id = str(post_info['message_id'])
+    #     date = post_info['date']
         
-        parsed_url = urlparse(link)
-        name = parsed_url.path
+    #     parsed_url = urlparse(link)
+    #     name = parsed_url.path
             
-        answer += f"{date} • <a href='{link}'>{name}</a>  • <a href='{link + '/' + post_id}'>посилання</a> \n"
+    #     answer += f"{date} • <a href='{link}'>{name}</a>  • <a href='{link + '/' + post_id}'>посилання</a> \n"
         
-        logger.info(post_info)
+    #     logger.info(post_info)
         
-    if answer != "":
-        answer = f"\n<b>Згадки в телеграм каналах:</b>\n{answer}"
+    # if answer != "":
+    #     answer = f"\n<b>Згадки в телеграм каналах:</b>\n{answer}"
         
-    return answer
+    return request['result']
