@@ -1,0 +1,21 @@
+<div class="sidebar">
+    <h2>Історія запитів</h2>
+    
+   
+    
+    <div class="recent-news">
+        {% for claim in recent_claims %}
+        <div class="news-item">
+            {% if claim.category %}
+            <span class="news-category category-{{ claim.category.name|lower }}">{{ claim.category.name }}</span>
+            {% endif %}
+            <h5><a href="{{ url_for('fact_check', claim_id=claim.id) }}">{{ claim.title }}</a></h5>
+            <p class="small text-muted">{{ claim.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            Немає останніх фактчекінгів для відображення
+        </div>
+        {% endfor %}
+    </div>
+</div>

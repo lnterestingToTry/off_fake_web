@@ -25,29 +25,37 @@ def get_user_lang(tg_id):
 
 
 @logger.catch
-async def get_answer(message:str):
+def get_answer(message:str):
     #tg_id = message.from_user.id
     #user_lang = get_user_lang(tg_id=tg_id)
     user_lang = default_lang
     text = message
     
-    #answer = ""
+    answer = {}
     
     is_link = check_link(text)
     
     if is_link:
-        answer = url_analysis_answer(url=text, language=user_lang)
+        answer['result'] = url_analysis_answer(url=text, language=user_lang)
+        answer['type'] = 'url'
         
         add_new_domain(url=text)
 
     if count_words(text) < 20 and not is_link:
-        answer = sites_analysis_answer(query=text, language=user_lang)
+        answer['result'] = sites_analysis_answer(query=text, language=user_lang)
         logger.info(answer)
-        answer += tg_channels_analysis_answer(query=text, language=user_lang)
+        if answer != None:
+            tg_channels_analysis_answer_ = tg_channels_analysis_answer(query=text, language=user_lang)
+            logger.info(tg_channels_analysis_answer_)
+            if tg_channels_analysis_answer_ != None:
+                answer['result'] += tg_channels_analysis_answer_
+        else:
+            answer['result'] = tg_channels_analysis_answer(query=text, language=user_lang)
+        answer['type'] = 'sites'
     else:
-        answer = article_analysis_answer(text, user_lang)
-        
+        answer['result'] = article_analysis_answer(text, user_lang)
+        answer['type'] = 'article'
     
     #logger.info(f"{answer}, {tg_id}, {text}, {answer}")
-    
+
     return answer

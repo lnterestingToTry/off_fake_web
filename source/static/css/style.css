@@ -1,0 +1,242 @@
+/* Main styling for OFF Fake website */
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --light-gray: #f8f9fa;
+    --dark-gray: #212529;
+    --border-color: #dee2e6;
+}
+
+body {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Sidebar styling */
+.sidebar {
+    background-color: white;
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--dark-gray);
+}
+
+.sidebar .news-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 10px;
+}
+
+.sidebar .news-item:last-child {
+    border-bottom: none;
+}
+
+.news-category {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.category-politics {
+    background-color: #d63384;
+    color: white;
+}
+
+.category-economy {
+    background-color: #198754;
+    color: white;
+}
+
+.category-science {
+    background-color: #0dcaf0;
+    color: white;
+}
+
+/* Main content styling */
+.main-content {
+    padding: 20px;
+    background-color: white;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    min-height: 100vh;
+}
+
+.claim-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.claim-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.claim-tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.claim-false {
+    background-color: #dc3545;
+    color: white;
+}
+
+.claim-true {
+    background-color: #198754;
+    color: white;
+}
+
+.claim-partially {
+    background-color: #ffc107;
+    color: black;
+}
+
+.claim-content {
+    margin-bottom: 20px;
+}
+
+.claim-sources {
+    background-color: var(--light-gray);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.claim-sources h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.source-link {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.source-date {
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+}
+
+/* Analytics sidebar styling */
+.analytics-sidebar {
+    background-color: white;
+    border-left: 1px solid var(--border-color);
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+}
+
+.analytics-sidebar h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--dark-gray);
+}
+
+.analytics-box {
+    margin: 30px;
+}
+
+.analytics-box h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--dark-gray);
+}
+
+.person-item, .resource-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.person-item img, .resource-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+    gap: 50px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--dark-gray);
+}
+
+.search-bar {
+    width: 100%;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.search-bar button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .sidebar, .analytics-sidebar {
+        height: auto;
+        position: relative;
+    }
+}
+
+/* Stats display */
+.stats-display {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: block;
+}
+
+.stats-label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}

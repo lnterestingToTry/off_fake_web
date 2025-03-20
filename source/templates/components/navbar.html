@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('query') }}">OFF Fake</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == url_for('query') %}active{% endif %}" href="{{ url_for('query') }}">Головна</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Про проєкт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Підтримати</a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</nav>

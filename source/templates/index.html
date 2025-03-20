@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}OFF Fake - Головна{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    <div class="form-group">
+        <label for="text">ЗАПИТ</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="query"
+            name="query"
+            placeholder="Enter here..."
+        >
+        <button type="submit" class="btn btn-primary">GO</button>
+        
+        {% if answer != None %}
+        {% if answer['type'] == 'sites' %}
+        <div class="container">
+            <h2>{{query}}</h2>
+            <ul class="link-list">
+                {% for item in answer['result'] %}
+                    <li>
+                        <a href="{{ item.url or item.link }}" target="_blank">{{ item.url or item.link }}</a>
+                        {% if item.date %} <small>(Дата: {{ item.date }})</small>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</form>
+
+{% endblock %}
