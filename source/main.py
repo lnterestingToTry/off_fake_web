@@ -7,12 +7,8 @@ from handlers import get_answer
 app = Flask(__name__)
 
 
-@app.route("/start")
-def start():
-    return redirect(url_for('query'))
 
-
-@app.route("/query", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def query():
     if request.method == 'POST':
         query = request.form.get('query')
@@ -22,9 +18,23 @@ def query():
         answer = get_answer(query)
         logger.info(answer)
 
+        kwargs =    {  
+                    'query': query,
+                    'answer': answer
+                    }
 
         if answer != None:
-            return render_template("index.html", query=query, answer=answer)
+            return render_template(template_name_or_list="index.html", **kwargs)
 
-            
-    return render_template("index.html", query=None, answer=None)
+    query = request.form.get('query')
+    
+    
+    answer = {}
+    
+    
+    kwargs =    {  
+        'query': query,
+        'answer': answer
+        }
+    
+    return render_template(template_name_or_list="index.html", **kwargs)

@@ -1,21 +1,49 @@
 <div class="sidebar">
     <h2>Історія запитів</h2>
-    
-   
-    
+
     <div class="recent-news">
-        {% for claim in recent_claims %}
-        <div class="news-item">
-            {% if claim.category %}
-            <span class="news-category category-{{ claim.category.name|lower }}">{{ claim.category.name }}</span>
-            {% endif %}
-            <h5><a href="{{ url_for('fact_check', claim_id=claim.id) }}">{{ claim.title }}</a></h5>
-            <p class="small text-muted">{{ claim.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
-        </div>
+        {% if answer and answer['user_requests'] %}
+            <ul class="request-list">
+                {% for request in answer['user_requests'] %}
+                    <li class="request-item">{{ request['query_string'] }} <br> {{ request['date'] }}</li>
+                {% endfor %}
+            </ul>
         {% else %}
-        <div class="alert alert-info">
-            Немає останніх фактчекінгів для відображення
-        </div>
-        {% endfor %}
+            <p class="no-requests">Запитів поки немає.</p>
+        {% endif %}
     </div>
 </div>
+
+<style>
+    .sidebar {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .request-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .request-item {
+        background: #ffffff;
+        padding: 8px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .no-requests {
+        font-style: italic;
+        color: #666;
+    }
+</style>

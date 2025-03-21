@@ -16,21 +16,59 @@
         >
         <button type="submit" class="btn btn-primary">GO</button>
         
-        {% if answer != None %}
-        {% if answer['type'] == 'sites' %}
+        {% if answer and answer['type'] == 'sites' %}
         <div class="container">
             <h2>{{query}}</h2>
             <ul class="link-list">
+                {% if answer['result'] != None %}
                 {% for item in answer['result'] %}
                     <li>
                         <a href="{{ item.url or item.link }}" target="_blank">{{ item.url or item.link }}</a>
                         {% if item.date %} <small>(Дата: {{ item.date }})</small>{% endif %}
                     </li>
                 {% endfor %}
+                {% endif %}
             </ul>
         </div>
         {% endif %}
+
+        {% if answer and answer['type'] == 'url' %}
+        <div class="container">
+            <h2>{{query}}</h2>
+            <ul class="link-list">
+                {% if answer['result'] != None %}
+                    {{answer['result']}}
+                {% endif %}
+            </ul>
+        </div>
         {% endif %}
+
+
+
+        {% if answer and answer['type'] == 'article' %}
+        <div class="container">
+            <h2>{{query[:100] + '...'}}</h2>
+            <ul class="link-list">
+                {% if answer['result'] != None %}
+                    <ul class="link-list">
+                        {% if answer['result']['postThesis'] != None %}
+                            <li><strong>Thesis:</strong> {{ answer['result']['postThesis'] }}</li>
+                        {% endif %}
+                        {% if answer['result']['postAuthor'] != 'None' %}
+                            <li><strong>Author:</strong> {{ answer['result']['postAuthor'] }}</li>
+                        {% endif %}
+                        {% if answer['result']['postSource'] != None %}
+                            <li><strong>Source:</strong> {{ answer['result']['postSource'] }}</li>
+                        {% endif %}
+                        {% if answer['result']['postEmotion'] != None %}
+                            <li><strong>Emotion:</strong> {{ answer['result']['postEmotion'] }}</li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+
     </div>
 </form>
 

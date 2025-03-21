@@ -4,6 +4,8 @@ from .helpers import count_words, check_link
 
 from .api_requests import get_user
 from .api_requests import add_new_domain
+from .api_requests import get_requests
+from .api_requests import count_requests_last_month
 
 from .answers import url_analysis_answer, sites_analysis_answer, article_analysis_answer, tg_channels_analysis_answer
 
@@ -34,6 +36,21 @@ def get_answer(message:str):
     answer = {}
     
     is_link = check_link(text)
+    
+    user_requests = get_requests(num=10, query_type=2)
+    user_requests_url = get_requests(num=10, query_type=0)
+    
+    count_requests = count_requests_last_month()
+    logger.info(count_requests)
+    
+    answer['count_requests'] = count_requests['count']
+    
+    if user_requests['requests_list']:
+        answer['user_requests'] = user_requests['requests_list']
+        
+    if user_requests_url['requests_list']:
+        answer['user_requests_url'] = user_requests_url['requests_list']
+
     
     if is_link:
         answer['result'] = url_analysis_answer(url=text, language=user_lang)

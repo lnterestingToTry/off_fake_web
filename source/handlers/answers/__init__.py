@@ -3,7 +3,7 @@ from loguru import logger
 from urllib.parse import urlparse
 from datetime import datetime
 
-from handlers.api_requests import url_analysis, sites_analysis, telegram_channels, article_analysis
+from handlers.api_requests import url_analysis, sites_analysis, telegram_channels, article_analysis, add_new_request
 
 
 country_codes = {'UA': '🇺🇦',
@@ -17,14 +17,22 @@ def flag_by_country(code: str):
     else:
         return country_codes[None]
 
+query_types = {'url' : 0,
+               'article' : 1,
+               'sites': 2}
 
 
 @logger.catch
 def url_analysis_answer(url: str, language: str):
     #answer = ""
     
+    if url == '':
+        return None
+    
     request = url_analysis(url=url, language=language)
     logger.info(request)
+    
+    add_new_request(user_id=1, type=query_types['url'], text=url)
     
     if not 'result' in request:
         #answer = "no answer"
@@ -50,8 +58,13 @@ def url_analysis_answer(url: str, language: str):
 def article_analysis_answer(article: str, language: str):
     #answer = ""
     
+    if article == '':
+        return None
+    
     request = article_analysis(article=article, language=language)
     logger.info(request)
+    
+    logger.info(add_new_request(user_id=1, type=query_types['article'], text=article))
     
     if not 'result' in request:
         #answer = "no answer"
@@ -77,8 +90,14 @@ def article_analysis_answer(article: str, language: str):
 def sites_analysis_answer(query: str, language: str):
     #answer = ""
     
+    if query == '':
+        return None
+    
     request = sites_analysis(query=query, language=language)
     logger.info(request)
+    
+    logger.info(add_new_request(user_id=1, type=query_types['sites'], text=query))
+    
     
     if not 'result' in request:
         #answer = "no answer"

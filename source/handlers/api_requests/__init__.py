@@ -144,3 +144,47 @@ def get_domain(**kwargs):
         return None
         
     return data
+
+
+
+def add_new_request(**kwargs):
+    url = 'http://api_app:5000/add_new_request'
+    response = requests.post(url, data=kwargs)
+    data = None
+    
+    logger.info(response.text)
+    if response.text != None:
+        data = json.loads(response.text)
+    else:
+        return None
+        
+    return data
+
+
+
+def get_requests(**kwargs):
+    url = 'http://api_app:5000/get_requests'
+    response = requests.get(url, data=kwargs)
+    data = None
+    
+    logger.info(response.text)
+    if response.text != None:
+        data = json.loads(response.text)
+    else:
+        return None
+        
+    return data
+
+
+def count_requests_last_month(**kwargs):
+    url = 'http://api_app:5000/count_requests_last_month'
+    response = requests.get(url, data=kwargs)
+    data = None
+    
+    logger.info(response.text)
+    if response.text != None:
+        data = json.loads(response.text)
+    else:
+        return None
+        
+    return data

@@ -2,6 +2,8 @@
     
     <div class="analytics-box">
         <h3>Аналітика</h3>
+
+        <h4>{{answer['count_requests']}}</h4>
         
         <div class="most-mentioned mb-4">
             <h4>Найбільш уживані слова</h4>
@@ -21,20 +23,9 @@
         
         <div class="most-resources mb-4">
             <h4>Найбільш згадувані ресурси</h4>
-            <div class="list-group">
-                <div class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>Труха, Україна, STERNENKO</span>
-                    </div>
-                </div>
-                <div class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>monitor, Україна Online, Лачен паца...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+
+            {{answer['user_requests_url']}}
+
         <div class="popular-queries">
             <h4>Популярні запити</h4>
             <div class="list-group">
